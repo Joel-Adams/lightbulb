@@ -6,7 +6,7 @@
   become: no
   vars:
     resource_group_name: Student4
-    virtual_netowrk_name: Student4-Network
+    virtual_network_name: Student4-Network
     public_ip_name: Student4-PubIP2
     security_group_name: Student4-SG
     domain_name: student4vm2
