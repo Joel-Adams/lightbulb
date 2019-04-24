@@ -67,9 +67,9 @@
       security_group: "{{ security_group_name }}"
       cert_validation_mode: ignore
       ip_configurations:
-        - name: student4.ipconfig1
+        - name: student4.ipconfig2
           private_ip_allocation_method: Dynamic
-          public_ip_address_name: Student4-PubIP
+          public_ip_address_name: "{{ public_ip_name }}"
 
   - name: Create Azure RHEL Virtual Machine
     azure_rm_virtualmachine:
