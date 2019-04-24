@@ -1,0 +1,89 @@
+---
+- name: Create Instance in Azure
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  become: no
+  vars:
+    resource_group_name: Student4
+    virtual_netowrk_name: Student4-Network
+    public_ip_name: Student4-PubIP
+    security_group_name: Student4-SG
+    domain_name: student4vm2
+    network_infrace_name: Student4-NI
+    virtual_machine_name: Student4vm2
+    vn_address_prefixes_cidr: 172.16.0.0/16
+    subnet_cidr: 172.16.16.0/20
+
+  tasks:
+  - name: Create Azure Network
+    azure_rm_virtualnetwork:
+      name: "{{ virtual_network_name }}"
+      address_prefixes_cidr: "{{ vn_address_prefixes_cidr }}"
+      resource_group: "{{ resource_group_name }}"
+
+  - name: Create subnet for "{{ virtual_network_name }}"
+    azure_rm_subnet:
+      resource_group: "{{ resource_group_name }}"
+      name: Student4-Subnet
+      virtual_network_name: "{{ virtual_network_name }}"
+      address_prefix_cidr: "{{ subnet_cidr }}"
+
+  - name: Create a public ip address
+    azure_rm_publicipaddress:
+      resource_group: "{{ resource_group_name }}"
+      name: "{{ public_ip_name }}"
+      allocation_method: Dynamic
+      domain_name: "{{ domain_name }}"
+
+  - name: Create Azure security group for the virtual network named "{{ virtual_network_name }}"
+    azure_rm_securitygroup:
+      name: "{{ security_group_name }}"
+      resource_group: "{{ resource_group_name }}"
+      rules:
+        - name: 'AllowMultiplePorts'
+          protocol: Tcp
+          destination_port_range:
+            - 443
+            - 80
+            - 22
+            - 3389
+            - 8888
+            - 8080
+            - 8443
+          access: Allow
+          priority: 100
+          direction: Inbound
+        - name: 'AllowAllOutbound'
+          priority: 201
+          direction: Outbound
+
+  - name: Create a network interface using existing security group and public IP
+    azure_rm_networkinterface:
+      name: "{{ network_interface_name }}"
+      resource_group: "{{ resource_group_name }}"
+      virtual_network: "{{ virtual_network_name }}"
+      subnet_name: Student4-Subnet
+      security_group: "{{ security_group_name }}"
+      cert_validation_mode: ignore
+      ip_configurations:
+        - name: student4.ipconfig1
+          private_ip_allocation_method: Dynamic
+          public_ip_address_name: Student4-PubIP
+
+  - name: Create Azure RHEL Virtual Machine
+    azure_rm_virtualmachine:
+      resource_group: "{{ resource_group_name }}"
+      name: "{{ virtual_machine_name }}"
+      vm_size: Standard_B2s
+      admin_username: Student4
+      admin_password: RedHatSNX123!
+      network_interface_names: "{{ network_interface_name }}"
+      image:
+        offer: RHEL
+        publisher: RedHat
+        sku: '7-RAW'
+        version: latest
+      ssh_public_keys:
+        - path: /home/Student4/.ssh/authorized_keys
+          key_data: "{{lookup('file', '/home/azure-user/.ssh/id_rsa.pub')}}"
