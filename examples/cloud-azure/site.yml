@@ -10,7 +10,7 @@
     public_ip_name: Student4-PubIP2
     security_group_name: Student4-SG
     domain_name: student4vm2
-    network_infrace_name: Student4-NI2
+    network_interface_name: Student4-NI2
     virtual_machine_name: Student4vm2
     vn_address_prefixes_cidr: 172.16.0.0/16
     subnet_cidr: 172.16.16.0/20
