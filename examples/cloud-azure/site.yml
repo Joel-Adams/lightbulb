@@ -84,6 +84,3 @@
         publisher: RedHat
         sku: '7-RAW'
         version: latest
-      ssh_public_keys:
-        - path: /home/Student4/.ssh/authorized_keys
-          key_data: "{{lookup('file', '/home/azure-user/.ssh/id_rsa.pub')}}"
