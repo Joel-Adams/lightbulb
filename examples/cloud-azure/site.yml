@@ -7,10 +7,10 @@
   vars:
     resource_group_name: Student4
     virtual_netowrk_name: Student4-Network
-    public_ip_name: Student4-PubIP
+    public_ip_name: Student4-PubIP2
     security_group_name: Student4-SG
     domain_name: student4vm2
-    network_infrace_name: Student4-NI
+    network_infrace_name: Student4-NI2
     virtual_machine_name: Student4vm2
     vn_address_prefixes_cidr: 172.16.0.0/16
     subnet_cidr: 172.16.16.0/20
