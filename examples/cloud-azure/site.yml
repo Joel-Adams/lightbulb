@@ -7,12 +7,12 @@
   vars:
     resource_group_name: Student4
     virtual_network_name: Student4-Network
-    public_ip_name: Student4-PubIP3
+    public_ip_name: Student4-PubIP4
     security_group_name: Student4-SG
-    domain_name: student4vm3
-    network_interface_name: Student4-NI3
-    virtual_machine_name: Student4vm3
-    ip_configuration_name: student4.ipconfig3
+    domain_name: student4vm4
+    network_interface_name: Student4-NI4
+    virtual_machine_name: Student4vm4
+    ip_configuration_name: student4.ipconfig4
 
   tasks:
 
