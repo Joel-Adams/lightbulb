@@ -41,7 +41,7 @@
       resource_group: "{{ resource_group_name }}"
       name: "{{ virtual_machine_name }}"
       vm_size: Standard_B2s
-      admin_username: Student4
+      admin_username: student4
       admin_password: RedHatSNX123!
       network_interface_names: "{{ network_interface_name }}"
       image:
