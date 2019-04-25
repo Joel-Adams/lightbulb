@@ -4,46 +4,37 @@
   connection: local
   gather_facts: false
   become: no
-  vars:
-    resource_group_name: Student4
-    virtual_network_name: Student4-Network
-    public_ip_name: Student4-PubIP4
-    security_group_name: Student4-SG
-    domain_name: student4vm4
-    network_interface_name: Student4-NI4
-    virtual_machine_name: Student4vm4
-    ip_configuration_name: student4.ipconfig4
 
   tasks:
 
   - name: Create a public ip address
     azure_rm_publicipaddress:
-      resource_group: "{{ resource_group_name }}"
-      name: "{{ public_ip_name }}"
+      resource_group: "Student{{ student_number }}"
+      name: "Student{{ student_number }}-PubIP{{ virtual_machine_num }}"
       allocation_method: Dynamic
-      domain_name: "{{ domain_name }}"
+      domain_name: "student{{ student_number }}vm{{ virtual_machine_num }}"
 
   - name: Create a network interface using existing security group and public IP
     azure_rm_networkinterface:
-      name: "{{ network_interface_name }}"
-      resource_group: "{{ resource_group_name }}"
-      virtual_network: "{{ virtual_network_name }}"
-      subnet_name: Student4-Subnet
-      security_group: "{{ security_group_name }}"
+      name: "Student{{ student_number }}-NI{{ virtual_machine_num }}"
+      resource_group: "Student{{ student_number }}"
+      virtual_network: "Student{{ student_number }}-Network"
+      subnet_name: "Student{{ student_number }}-Subnet"
+      security_group: "Student{{ student_number }}-SG"
       cert_validation_mode: ignore
       ip_configurations:
-        - name: "{{ ip_configuration_name }}"
+        - name: "student{{ student_number }}.ipconfig{{ virtual_machine_num }}"
           private_ip_allocation_method: Dynamic
-          public_ip_address_name: "{{ public_ip_name }}"
+          public_ip_address_name: "student{{ student_number }}vm{{ virtual_machine_num }}"
 
   - name: Create Azure RHEL Virtual Machine
     azure_rm_virtualmachine:
-      resource_group: "{{ resource_group_name }}"
-      name: "{{ virtual_machine_name }}"
+      resource_group: "Student{{ student_number }}"
+      name: "Student{{ student_number }}vm{{ virtual_machine_num }}"
       vm_size: Standard_B2s
-      admin_username: student4
+      admin_username: "student{{ student_number }}"
       admin_password: RedHatSNX123!
-      network_interface_names: "{{ network_interface_name }}"
+      network_interface_names: "Student{{ student_number }}-NI{{ virtual_machine_num }}"
       image:
         offer: RHEL
         publisher: RedHat
