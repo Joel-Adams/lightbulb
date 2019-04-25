@@ -24,7 +24,7 @@
       ip_configurations:
         - name: "student{{ student_number }}.ipconfig{{ virtual_machine_num }}"
           private_ip_allocation_method: Dynamic
-          public_ip_address_name: "student{{ student_number }}vm{{ virtual_machine_num }}"
+          public_ip_address_name: "Student{{ student_number }}-PubIP{{ virtual_machine_num }}"
 
   - name: Create Azure RHEL Virtual Machine
     azure_rm_virtualmachine:
