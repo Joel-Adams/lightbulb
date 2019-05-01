@@ -87,7 +87,7 @@ Click on PROJECTS
 
 ### Step 2
 
-Click on ADD ![Add button](at_add.png), select Inventory.
+Click on ADD ![Add button](at_add.png).
 
 ### Step 3
 
@@ -169,4 +169,4 @@ At this point, we are doing with our basic configuration of Ansible Tower.  In e
 
 ---
 
-[Click Here to return to the Ansible Lightbulb - Ansible Tower Workshop](../README.md)
+[Click Here to return to the Ansible Lightbulb - Ansible Tower Guide](../README.md)
