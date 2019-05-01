@@ -1,6 +1,6 @@
 ---
 - name: Ensure apache is installed and started
-  hosts: mplinuxvm1.eastus.cloudapp.azure.com
+  hosts: web
   become: yes
   vars:
     httpd_packages:
