@@ -9,6 +9,9 @@
     apache_test_message: This is a test message
     apache_test_message2: THIS IS SPARTA!
     apache_webserver_port: 80
+    firewall_ports:
+      - https
+      - http
 
   tasks:
     - name: Ensure httpd packages are present
@@ -39,9 +42,23 @@
         name: httpd
         state: started
         enabled: yes
+ 
+    - name: add firewall exceptions
+      firewalld:
+        service: "{{ item }}"
+        permanent: yes
+        state: enabled
+      with_items: "{{ firewall_ports }}"
+      notify: restart firewalld
 
   handlers:
     - name: restart-apache-service
       service:
         name: httpd
         state: restarted
+        
+    - name: restart firewalld
+      service:
+        name: firewalld
+        state: restarted
+        enabled: yes
